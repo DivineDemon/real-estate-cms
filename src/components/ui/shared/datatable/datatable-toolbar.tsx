@@ -4,54 +4,55 @@ import { Table } from "@tanstack/react-table";
 import { CircleX, PlusCircle } from "lucide-react";
 
 import { Input } from "@/components/ui/input";
-import { status, types } from "@/lib/constants";
 import { Button } from "@/components/ui/button";
 import DataTableFilter from "./datatable-filter";
 
 interface DataTableToolbarProps<TData> {
   table: Table<TData>;
+  search: {
+    name: string;
+    title: string;
+  }[];
+  filters: {
+    name: string;
+    title: string;
+    options: {
+      value: string;
+      label: string;
+      icon: React.ComponentType<{ className?: string | undefined }> | undefined;
+    }[];
+  }[];
 }
 
-const DataTableToolbar = <TData,>({ table }: DataTableToolbarProps<TData>) => {
+const DataTableToolbar = <TData,>({ table, search, filters }: DataTableToolbarProps<TData>) => {
   const isFiltered = table.getState().columnFilters.length > 0;
 
   return (
     <div className="flex w-full items-center justify-between p-4 bg-primary-foreground">
       <div className="flex flex-1 items-center space-x-2">
-        <Input
-          placeholder={"Filter by Name"}
-          value={(table.getColumn("name")?.getFilterValue() as string) ?? ""}
-          onChange={(event) =>
-            table.getColumn("name")?.setFilterValue(event.target.value)
-          }
-          className="h-8 w-[150px] lg:w-[250px]"
-        />
-
-        <Input
-          placeholder={"Filter by Domain"}
-          value={(table.getColumn("domain")?.getFilterValue() as string) ?? ""}
-          onChange={(event) =>
-            table.getColumn("domain")?.setFilterValue(event.target.value)
-          }
-          className="h-8 w-[150px] lg:w-[250px]"
-        />
-
-        {table.getColumn("active") && (
-          <DataTableFilter
-            title={"Status"}
-            options={status}
-            column={table.getColumn("active")}
+        {search.map((item, idx) => (
+          <Input
+            key={idx}
+            placeholder={`Filter by ${item.title}`}
+            value={
+              (table.getColumn(item.name)?.getFilterValue() as string) ?? ""
+            }
+            onChange={(event) =>
+              table.getColumn(item.name)?.setFilterValue(event.target.value)
+            }
+            className="h-8 w-[150px] lg:w-[250px]"
           />
+        ))}
+        {filters.map(
+          (filter) =>
+            table.getColumn(filter.name) && (
+              <DataTableFilter
+                title={filter.title}
+                options={filter.options}
+                column={table.getColumn(filter.name)}
+              />
+            )
         )}
-
-        {table.getColumn("type") && (
-          <DataTableFilter
-            title={"Type"}
-            options={types}
-            column={table.getColumn("type")}
-          />
-        )}
-
         {isFiltered && (
           <Button
             variant="outline"

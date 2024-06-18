@@ -1,4 +1,5 @@
 import { useCallback, useMemo } from "react";
+import { status, types } from "@/lib/constants";
 import { getSiteColumns } from "@/columnDefs/siteDef";
 import DataTable from "@/components/ui/shared/datatable/datatable";
 
@@ -185,6 +186,28 @@ const Sites = () => {
       active: "1",
     },
   ];
+  const searchCriteria = [
+    {
+      name: "name",
+      title: "Name",
+    },
+    {
+      name: "domain",
+      title: "domain",
+    },
+  ];
+  const filterCriteria = [
+    {
+      name: "active",
+      title: "Status",
+      options: status,
+    },
+    {
+      name: "type",
+      title: "Type",
+      options: types,
+    },
+  ];
 
   const onEdit = useCallback(
     (site: SiteProps) => console.log(`Edited ${site.name}`),
@@ -196,7 +219,14 @@ const Sites = () => {
   );
   const siteColumns = useMemo(() => getSiteColumns({ onEdit, onDelete }), []);
 
-  return <DataTable columns={siteColumns} data={sites} />;
+  return (
+    <DataTable
+      search={searchCriteria}
+      filters={filterCriteria}
+      columns={siteColumns}
+      data={sites}
+    />
+  );
 };
 
 export default Sites;

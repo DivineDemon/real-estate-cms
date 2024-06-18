@@ -23,15 +23,28 @@ import { useState } from "react";
 interface DataTableProps<TData, TValue> {
   data: TData[];
   columns: ColumnDef<TData, TValue>[];
+  search: {
+    name: string;
+    title: string;
+  }[];
+  filters: {
+    name: string;
+    title: string;
+    options: {
+      value: string;
+      label: string;
+      icon: React.ComponentType<{ className?: string | undefined }> | undefined;
+    }[];
+  }[];
 }
 
 const DataTable = <TData, TValue>({
   data,
+  search,
+  filters,
   columns,
 }: DataTableProps<TData, TValue>) => {
-  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>(
-    []
-  );
+  const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
   const table = useReactTable({
     data,
@@ -47,7 +60,7 @@ const DataTable = <TData, TValue>({
 
   return (
     <div className="w-full flex flex-col items-center justify-center rounded-md border">
-      <DataTableToolbar table={table} />
+      <DataTableToolbar search={search} filters={filters} table={table} />
       <Table>
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => {

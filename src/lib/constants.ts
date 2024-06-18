@@ -1,4 +1,4 @@
-import { CheckCircle2, CircleX, Earth, Filter } from "lucide-react";
+import { CheckCircle2, CircleX, Earth, Filter, Flame, Handshake, Rocket, Sparkles } from "lucide-react";
 
 export const status = [
   {
@@ -23,5 +23,28 @@ export const types = [
     value: "Landing Page",
     label: "Landing Page",
     icon: Filter,
+  },
+];
+
+export const launchTypes = [
+  {
+    value: "Launch Soon",
+    label: "Launch Soon",
+    icon: Rocket,
+  },
+  {
+    value: "New Launch",
+    label: "New Launch",
+    icon: Sparkles,
+  },
+  {
+    value: "Hot Projects",
+    label: "Hot Projects",
+    icon: Flame,
+  },
+  {
+    value: "Sold Out",
+    label: "Sold Out",
+    icon: Handshake,
   },
 ];
