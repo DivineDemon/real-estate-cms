@@ -12,16 +12,10 @@ import {
   FormControl,
   FormMessage,
 } from "@/components/ui/form";
-import {
-  Card,
-  CardTitle,
-  CardHeader,
-  CardContent,
-  CardDescription,
-} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { ModeToggle } from "@/components/global/mode-toggle";
+import { Card, CardTitle, CardHeader, CardContent } from "@/components/ui/card";
 
 const loginSchema = z.object({
   email: z
@@ -56,15 +50,10 @@ const Login = () => {
 
   return (
     <div className="w-full h-screen flex items-center justify-center">
-      <Card className="mx-auto max-w-sm">
+      <Card className="w-1/5">
         <CardHeader>
-          <div className="w-full flex items-start justify-between">
-            <div className="flex flex-col items-center justify-start space-y-2">
-              <CardTitle className="w-full text-2xl">Login</CardTitle>
-              <CardDescription>
-                Enter your credentials to login to your account
-              </CardDescription>
-            </div>
+          <div className="w-full flex items-center justify-between">
+            <CardTitle className="w-full text-2xl">Login</CardTitle>
             <ModeToggle />
           </div>
         </CardHeader>
