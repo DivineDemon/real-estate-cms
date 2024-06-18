@@ -11,6 +11,8 @@ import {
   BrickWall,
   PencilRuler,
 } from "lucide-react";
+import { Link } from "react-router-dom";
+
 import Sidebar from "./sidebar";
 import Dropdown from "./dropdown";
 import { ModeToggle } from "@/components/global/mode-toggle";
@@ -44,26 +46,31 @@ const Navbar = () => {
       id: 1,
       name: "Projects",
       icon: <BrickWall className="w-7 h-7" />,
+      link: "/projects",
     },
     {
       id: 2,
       name: "Areas",
       icon: <LandPlot className="w-7 h-7" />,
+      link: "/areas",
     },
     {
       id: 3,
       name: "Blogs",
       icon: <Rss className="w-7 h-7" />,
+      link: "/sites",
     },
     {
       id: 4,
       name: "Developers",
       icon: <PencilRuler className="w-7 h-7" />,
+      link: "/developers",
     },
     {
       id: 5,
       name: "Sites",
       icon: <Workflow className="w-7 h-7" />,
+      link: "/sites",
     },
   ];
 
@@ -75,7 +82,9 @@ const Navbar = () => {
           size="icon"
           options={sidebarOptions}
         />
-        <Shield className="w-10 h-10" />
+        <Link to="/">
+          <Shield className="w-10 h-10" />
+        </Link>
       </div>
       <div className="flex items-center justify-end space-x-5">
         <Dropdown

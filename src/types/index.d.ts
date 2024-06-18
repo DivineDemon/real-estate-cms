@@ -16,6 +16,7 @@ declare type SidebarProps = {
     id: number;
     name: string;
     icon: React.ReactNode;
+    link: string;
   }[];
 };
 
