@@ -5,12 +5,11 @@ import {
   CardContent,
   CardDescription,
 } from "@/components/ui/card";
+import StatCard from "@/components/dashboard/stat-card";
+import EntityGraph from "@/components/dashboard/entity-graph";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 import { LandPlot, BrickWall, Rss, PencilRuler } from "lucide-react";
-
-import StatCard from "@/components/dashboard/stat-card";
-import EntityGraph from "@/components/dashboard/entity-graph";
 
 const Dashboard = () => {
   const cards = [
