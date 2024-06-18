@@ -28,14 +28,14 @@ const Dashboard = () => {
       icon: <BrickWall className="w-4 h-4" />,
     },
     {
-      id: 1,
+      id: 3,
       name: "Total Blogs",
       value: 13,
       description: "~ 2/week",
       icon: <Rss className="w-4 h-4" />,
     },
     {
-      id: 1,
+      id: 4,
       name: "Total Developers",
       value: 110,
       description: "~ 8/day",
