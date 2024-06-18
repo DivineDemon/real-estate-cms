@@ -44,9 +44,10 @@ const DataTableToolbar = <TData,>({ table, search, filters }: DataTableToolbarPr
           />
         ))}
         {filters.map(
-          (filter) =>
+          (filter, idx) =>
             table.getColumn(filter.name) && (
               <DataTableFilter
+                key={idx}
                 title={filter.title}
                 options={filter.options}
                 column={table.getColumn(filter.name)}

@@ -1,60 +1,53 @@
+import dayjs from "dayjs";
+import { Switch } from "@radix-ui/react-switch";
 import { ColumnDef } from "@tanstack/react-table";
+import { CircleCheck, CircleX } from "lucide-react";
 
-import { formatNumber } from "@/lib/utils";
-import { Switch } from "@/components/ui/switch";
-import { status, launchTypes } from "@/lib/constants";
+import { status } from "@/lib/constants";
 import DataTableRowActions from "@/components/ui/shared/datatable/datatable-row-actions";
 
-export const getProjectColumns = ({
+export const getBlogColumns = ({
   onEdit,
   onDelete,
-}: ProjectColumnsProps): ColumnDef<ProjectProps>[] => [
+}: BlogColumnsProps): ColumnDef<BlogProps>[] => [
   {
     header: "S. No",
     accessorKey: "id",
-  },
-  {
-    accessorKey: "launch_type",
-    header: "Launch Type",
-    cell: ({ row }) => {
-      const type = launchTypes.find(
-        (t) => t.value === row.getValue("launch_type")
-      );
-
-      if (!type) {
-        return null;
-      }
-
-      return <span>{type.label}</span>;
-    },
-    filterFn: (row, id, value) => {
-      return value.includes(row.getValue(id));
-    },
   },
   {
     header: "Title",
     accessorKey: "title",
   },
   {
-    header: "Area",
-    accessorKey: "area",
-  },
-  {
-    header: "Developer",
-    accessorKey: "developer",
-  },
-  {
-    header: "Starting Price",
-    accessorKey: "starting_price",
+    header: "Thumbnail",
+    accessorKey: "thumbnail",
     cell: ({ row }) => (
-      <p className="w-full text-left">
-        AED&nbsp;{formatNumber(parseInt(row.original.starting_price))}
+      <p className="w-[500px] text-left overflow-hidden truncate">
+        {row.original.thumbnail}
       </p>
     ),
   },
   {
-    header: "Payment Plan",
-    accessorKey: "payment_plan",
+    header: "Video Link",
+    accessorKey: "video_link",
+    cell: ({ row }) => (
+      <div className="w-full flex items-center justify-center">
+        {row.original.video_link !== "" ? (
+          <CircleCheck className="w-5 h-5 text-green-500" />
+        ) : (
+          <CircleX className="w-5 h-5 text-red-500" />
+        )}
+      </div>
+    ),
+  },
+  {
+    header: "Created",
+    accessorKey: "created_at",
+    cell: ({ row }) => (
+      <p className="w-full text-left">
+        {dayjs(row.original.created_at).format("DD-MM-YYYY | HH:mm")}
+      </p>
+    ),
   },
   {
     accessorKey: "active",

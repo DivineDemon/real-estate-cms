@@ -1,19 +1,16 @@
 import { useCallback, useMemo } from "react";
-import { status, types } from "@/lib/constants";
+
+import { status } from "@/lib/constants";
 import Loader from "@/components/global/loader";
-import { getSiteColumns } from "@/columnDefs/siteDef";
 import { useFetchDataQuery } from "@/store/slices/api";
+import { getDeveloperColumns } from "@/columnDefs/devDef";
 import DataTable from "@/components/ui/shared/datatable/datatable";
 
-const Sites = () => {
+const Developers = () => {
   const searchCriteria = [
     {
       name: "name",
       title: "Name",
-    },
-    {
-      name: "domain",
-      title: "domain",
     },
   ];
   const filterCriteria = [
@@ -22,23 +19,21 @@ const Sites = () => {
       title: "Status",
       options: status,
     },
-    {
-      name: "type",
-      title: "Type",
-      options: types,
-    },
   ];
-  const { data, isLoading } = useFetchDataQuery("site");
+  const { data, isLoading } = useFetchDataQuery("developer");
 
   const onEdit = useCallback(
-    (site: SiteProps) => console.log(`Edited ${site.name}`),
+    (developer: DeveloperProps) => console.log(`Edited ${developer.name}`),
     []
   );
   const onDelete = useCallback(
-    (site: SiteProps) => console.log(`Deleted ${site.name}`),
+    (developer: DeveloperProps) => console.log(`Deleted ${developer.name}`),
     []
   );
-  const siteColumns = useMemo(() => getSiteColumns({ onEdit, onDelete }), []);
+  const developerColumns = useMemo(
+    () => getDeveloperColumns({ onEdit, onDelete }),
+    []
+  );
 
   return isLoading ? (
     <Loader />
@@ -46,10 +41,10 @@ const Sites = () => {
     <DataTable
       search={searchCriteria}
       filters={filterCriteria}
-      columns={siteColumns}
-      data={data as SiteProps[]}
+      columns={developerColumns}
+      data={data as DeveloperProps[]}
     />
   );
 };
 
-export default Sites;
+export default Developers;

@@ -58,7 +58,7 @@ const Navbar = () => {
       id: 3,
       name: "Blogs",
       icon: <Rss className="w-7 h-7" />,
-      link: "/sites",
+      link: "/blogs",
     },
     {
       id: 4,

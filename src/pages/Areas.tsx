@@ -1,19 +1,16 @@
 import { useCallback, useMemo } from "react";
-import { status, types } from "@/lib/constants";
+
+import { status } from "@/lib/constants";
 import Loader from "@/components/global/loader";
-import { getSiteColumns } from "@/columnDefs/siteDef";
+import { getAreaColumns } from "@/columnDefs/areaDef";
 import { useFetchDataQuery } from "@/store/slices/api";
 import DataTable from "@/components/ui/shared/datatable/datatable";
 
-const Sites = () => {
+const Areas = () => {
   const searchCriteria = [
     {
       name: "name",
       title: "Name",
-    },
-    {
-      name: "domain",
-      title: "domain",
     },
   ];
   const filterCriteria = [
@@ -22,23 +19,18 @@ const Sites = () => {
       title: "Status",
       options: status,
     },
-    {
-      name: "type",
-      title: "Type",
-      options: types,
-    },
   ];
-  const { data, isLoading } = useFetchDataQuery("site");
+  const { data, isLoading } = useFetchDataQuery("area");
 
   const onEdit = useCallback(
-    (site: SiteProps) => console.log(`Edited ${site.name}`),
+    (area: AreaProps) => console.log(`Edited ${area.name}`),
     []
   );
   const onDelete = useCallback(
-    (site: SiteProps) => console.log(`Deleted ${site.name}`),
+    (area: AreaProps) => console.log(`Deleted ${area.name}`),
     []
   );
-  const siteColumns = useMemo(() => getSiteColumns({ onEdit, onDelete }), []);
+  const areaColumns = useMemo(() => getAreaColumns({ onEdit, onDelete }), []);
 
   return isLoading ? (
     <Loader />
@@ -46,10 +38,10 @@ const Sites = () => {
     <DataTable
       search={searchCriteria}
       filters={filterCriteria}
-      columns={siteColumns}
-      data={data as SiteProps[]}
+      columns={areaColumns}
+      data={data as AreaProps[]}
     />
   );
 };
 
-export default Sites;
+export default Areas;
