@@ -33,7 +33,7 @@ declare type SiteProps = {
 declare type SiteColumnsProps = {
   onEdit: (site: SiteProps) => void;
   onDelete: (site: SiteProps) => void;
-}
+};
 
 declare type ProjectProps = {
   id: string;
@@ -100,9 +100,9 @@ declare type BlogColumnsProps = {
 };
 
 declare type GlobalStateProps = {
+  areas: AreaProps[];
+  blogs: BlogProps[];
   sites: SiteProps[];
-  areas: [];
-  blogs: [];
   projects: ProjectProps[];
-  developers: [];
+  developers: DeveloperProps[];
 };
