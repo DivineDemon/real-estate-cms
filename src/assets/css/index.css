@@ -58,6 +58,9 @@
   body {
     @apply bg-background text-foreground;
   }
+  input {
+    @apply focus:outline-0 focus:ring-0 focus-visible:outline-0 focus-visible:ring-0;
+  }
 }
 
 * {

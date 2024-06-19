@@ -4,6 +4,7 @@ const initialState: GlobalStateProps = {
   sites: [],
   areas: [],
   blogs: [],
+  user: null,
   projects: [],
   developers: [],
 };
@@ -12,6 +13,9 @@ const globalSlice = createSlice({
   name: "global",
   initialState,
   reducers: {
+    setUser: (state, action) => {
+      state.user = action.payload;
+    },
     setSites: (state, action) => {
       state.sites = action.payload;
     },
@@ -30,6 +34,12 @@ const globalSlice = createSlice({
   },
 });
 
-export const { setSites, setAreas, setBlogs, setProjects, setDevelopers } =
-  globalSlice.actions;
+export const {
+  setUser,
+  setSites,
+  setAreas,
+  setBlogs,
+  setProjects,
+  setDevelopers,
+} = globalSlice.actions;
 export default globalSlice.reducer;

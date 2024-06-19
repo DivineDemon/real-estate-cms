@@ -5,6 +5,7 @@ declare type DropdownProps = {
   options: {
     id: number;
     name: string;
+    link: string;
     icon: React.ReactNode;
   }[];
 };
@@ -103,6 +104,16 @@ declare type GlobalStateProps = {
   areas: AreaProps[];
   blogs: BlogProps[];
   sites: SiteProps[];
+  user: UserProps | null;
   projects: ProjectProps[];
   developers: DeveloperProps[];
+};
+
+declare type UserProps = {
+  id: number;
+  name: string;
+  designation: string;
+  email: string;
+  password: string;
+  image: string;
 };

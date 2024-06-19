@@ -1,7 +1,6 @@
 import {
   Rss,
   Menu,
-  User,
   LogOut,
   Shield,
   LifeBuoy,
@@ -12,9 +11,11 @@ import {
   PencilRuler,
 } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 import Sidebar from "./sidebar";
 import Dropdown from "./dropdown";
+import { RootState } from "@/store";
 import { ModeToggle } from "@/components/global/mode-toggle";
 import { Avatar, AvatarFallback, AvatarImage } from "../avatar";
 
@@ -22,22 +23,20 @@ const Navbar = () => {
   const userOptions = [
     {
       id: 1,
-      name: "Profile",
-      icon: <User className="mr-2 h-4 w-4" />,
-    },
-    {
-      id: 2,
       name: "Settings",
+      link: "/settings",
       icon: <Settings className="mr-2 h-4 w-4" />,
     },
     {
-      id: 3,
+      id: 2,
       name: "About",
+      link: "/about",
       icon: <LifeBuoy className="mr-2 h-4 w-4" />,
     },
     {
-      id: 4,
+      id: 3,
       name: "Logout",
+      link: "/login",
       icon: <LogOut className="mr-2 h-4 w-4" />,
     },
   ];
@@ -73,6 +72,7 @@ const Navbar = () => {
       link: "/sites",
     },
   ];
+  const { user } = useSelector((state: RootState) => state.global);
 
   return (
     <nav className="w-full flex items-center justify-between py-5 px-10 bg-background border-b border-gray-200 dark:border-gray-700">
@@ -91,11 +91,22 @@ const Navbar = () => {
           size="icon"
           button={
             <Avatar>
-              <AvatarImage src="https://github.com/shadcn.png" alt="@shadcn" />
-              <AvatarFallback>CN</AvatarFallback>
+              <AvatarImage
+                src={`${
+                  user?.image ? user?.image : "https://github.com/shadcn.png"
+                }`}
+                alt="@shadcn"
+              />
+              <AvatarFallback>
+                {user?.name
+                  ? `${user?.name.split(" ")[0][0]}&nbsp;${
+                      user?.name.split(" ")[1][0]
+                    }`
+                  : "MH"}
+              </AvatarFallback>
             </Avatar>
           }
-          title="Welcome, User"
+          title={`Welcome, ${user?.name ? user?.name : "User"}`}
           options={userOptions}
         />
         <ModeToggle />

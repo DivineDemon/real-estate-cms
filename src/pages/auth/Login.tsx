@@ -1,7 +1,10 @@
 import { z } from "zod";
 import { toast } from "sonner";
-import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
+import { useEffect, useState } from "react";
+import { Eye, EyeOff, Loader2 } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import {
@@ -12,8 +15,10 @@ import {
   FormControl,
   FormMessage,
 } from "@/components/ui/form";
+import { users } from "@/lib/constants";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { setUser } from "@/store/slices/global";
 import { ModeToggle } from "@/components/global/mode-toggle";
 import { Card, CardTitle, CardHeader, CardContent } from "@/components/ui/card";
 
@@ -33,6 +38,10 @@ const loginSchema = z.object({
 });
 
 const Login = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
   const loginForm = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
@@ -42,11 +51,36 @@ const Login = () => {
   });
 
   const onSubmit = (values: z.infer<typeof loginSchema>) => {
-    toast("Values", {
-      className: "border p-2.5",
-      description: `Email: ${values.email}`,
-    });
+    setLoading(true);
+
+    const user = users.filter(
+      (user) => user.email === values.email && user.password === values.password
+    )[0];
+
+    setTimeout(() => {
+      if (user) {
+        toast.success("Success!", {
+          className:
+            "p-2.5 rounded-lg border flex items-center justify-start space-x-2.5",
+          description: "Successfully Logged In!",
+        });
+        dispatch(setUser(user));
+        navigate("/");
+      } else {
+        toast.error("Error!", {
+          className:
+            "p-2.5 rounded-lg border flex items-center justify-start space-x-2.5",
+          description: "User not Found!",
+        });
+      }
+
+      setLoading(false);
+    }, 2000);
   };
+
+  useEffect(() => {
+    dispatch(setUser(null));
+  }, []);
 
   return (
     <div className="w-full h-screen flex items-center justify-center">
@@ -95,18 +129,39 @@ const Login = () => {
                       </Link>
                     </div>
                     <FormControl>
-                      <Input
-                        type="password"
-                        placeholder="**********"
-                        {...field}
-                      />
+                      <div className="w-full flex items-center justify-between rounded-md space-x-1.5 border px-3 py-2 h-10">
+                        <Input
+                          className="border-none p-0 h-full"
+                          type={showPassword ? "text" : "password"}
+                          placeholder="**********"
+                          {...field}
+                        />
+                        <Button
+                          type="button"
+                          variant="ghost"
+                          disabled={field.value === ""}
+                          className="p-0 hover:bg-transparent"
+                          onClick={() =>
+                            setShowPassword((prev) => (prev = !prev))
+                          }
+                        >
+                          {showPassword ? <EyeOff /> : <Eye />}
+                        </Button>
+                      </div>
                     </FormControl>
                     <FormMessage />
                   </FormItem>
                 )}
               />
-              <Button type="submit" className="w-full">
-                Login
+              <Button disabled={loading} type="submit" className="w-full">
+                {loading ? (
+                  <div className="w-full flex items-center justify-center space-x-3">
+                    <Loader2 className="w-5 h-5 animate-spin" />
+                    <span>Please Wait...</span>
+                  </div>
+                ) : (
+                  "Login"
+                )}
               </Button>
               <div className="mt-4 text-center text-sm">
                 Don&apos;t have an account?&nbsp;

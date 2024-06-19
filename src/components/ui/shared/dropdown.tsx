@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 import {
   DropdownMenu,
   DropdownMenuItem,
@@ -23,8 +25,13 @@ const Dropdown = ({ size, button, title, options }: DropdownProps) => {
         <DropdownMenuGroup>
           {options.map((option) => (
             <DropdownMenuItem key={option.id}>
-              {option.icon}
-              <span>{option.name}</span>
+              <Link
+                to={option.link}
+                className="w-full flex items-center justify-start space-x-3"
+              >
+                {option.icon}
+                <span>{option.name}</span>
+              </Link>
             </DropdownMenuItem>
           ))}
         </DropdownMenuGroup>
