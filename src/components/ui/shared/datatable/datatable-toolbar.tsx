@@ -1,11 +1,12 @@
 "use client";
 
+import { CircleX } from "lucide-react";
 import { Table } from "@tanstack/react-table";
-import { CircleX, PlusCircle } from "lucide-react";
 
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import DataTableFilter from "./datatable-filter";
+import AddSite from "@/components/modals/add-site";
 
 interface DataTableToolbarProps<TData> {
   table: Table<TData>;
@@ -54,6 +55,7 @@ const DataTableToolbar = <TData,>({ table, search, filters }: DataTableToolbarPr
               />
             )
         )}
+
         {isFiltered && (
           <Button
             variant="outline"
@@ -65,14 +67,8 @@ const DataTableToolbar = <TData,>({ table, search, filters }: DataTableToolbarPr
           </Button>
         )}
       </div>
-      <Button
-        variant="default"
-        size="default"
-        className="flex items-center justify-center space-x-3 place-self-end"
-      >
-        <PlusCircle className="w-4 h-4" />
-        <span>Add</span>
-      </Button>
+      
+      <AddSite />
     </div>
   );
 };
